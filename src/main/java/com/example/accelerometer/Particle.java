@@ -17,14 +17,14 @@ public class Particle {
 
     //use the acceleration values to calculate displacement of the particle along the XZ and Y axis.
     public void updatePosition(float sx, float sy, float sz, long timeStamp) {
-        float dt = (System.nanoTime() - timeStamp) / 100000000.0f;
+        Log.d(mPosX + "", mPosY + "");
+        float dt = (System.nanoTime() - timeStamp) / 1000000000.0f/ 100000.0f;
         mVelX += -sx * dt;
         mVelY += -sy * dt;
 
         mPosX += mVelX * dt;
         mPosY += mVelY * dt;
 
-        Log.d(mPosX + "", mPosY + "");
         //Log.d("pos", sx + "," + sy + "," + sz + "," + dt);
 
     }
@@ -34,12 +34,12 @@ public class Particle {
         if(mPosX > mHorizontalBound) {
             mPosX = mHorizontalBound;
             mVelX = -mVelX * COR;
-        } else if (mPosX < 0) {
-            mPosX = 0;
+        } else if (mPosX < -mHorizontalBound) {
+            mPosX = -mHorizontalBound;
             mVelX = -mVelX * COR;
         }
-        if(mPosY > 0) {
-            mPosY = 0;
+        if(mPosY > mVerticalBound) {
+            mPosY = mVerticalBound;
             mVelY = -mVelY * COR;
         } else if (mPosY < -mVerticalBound) {
             mPosY = -mVerticalBound;

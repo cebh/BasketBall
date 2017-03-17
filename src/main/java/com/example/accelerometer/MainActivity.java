@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         // Acquire WakeLock
+        mWakeLock.acquire();
         sim.startSimulation();
         //implement startSimulation
     }
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         // Release WakeLock
+        mWakeLock.release();
         sim.stopSimulation();
         //implement stopSimulation
     }

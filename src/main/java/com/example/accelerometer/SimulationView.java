@@ -59,11 +59,10 @@ public class SimulationView extends View implements SensorEventListener {
 
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        mXOrigin = 100;
-        mYOrigin = 100;
-        mHorizontalBound = mDisplay.getWidth();
-        mVerticalBound = mDisplay.getHeight();
+        //mXOrigin = 0;
+        //mYOrigin = 0;
+        //mHorizontalBound = mDisplay.getWidth();
+        //mVerticalBound = mDisplay.getHeight();
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -81,6 +80,17 @@ public class SimulationView extends View implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    public void onSizeChanged(int width, int height, int oldWidth, int oldHeight)
+    {
+        super.onSizeChanged(width, height, oldWidth, oldHeight);
+
+        mXOrigin = width * 0.5f;
+        mYOrigin = height * 0.5f;
+        mHorizontalBound = (width - BALL_SIZE) * 0.5f;
+        mVerticalBound = (height - BALL_SIZE) * 0.5f;
     }
 
     public void startSimulation()
@@ -101,7 +111,6 @@ public class SimulationView extends View implements SensorEventListener {
 
         mBall.updatePosition(mSensorX, mSensorY, mSensorZ, mSensorTimeStamp);
         mBall.resolveCollisionWithBounds(mHorizontalBound, mVerticalBound);
-
         canvas.drawBitmap(mBitmap, (mXOrigin - BALL_SIZE/2) + mBall.mPosX, (mYOrigin - BALL_SIZE/2) - mBall.mPosY, null);
         invalidate();
     }
